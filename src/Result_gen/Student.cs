@@ -20,7 +20,7 @@ namespace Result_gen
     {
         public List<string> subjects;
         public List<double> subject_marks;
-        public double total_marks;
+        private double total_marks;
         public double percentage;
         public List<char> grades;
         public char final_grade;
@@ -35,11 +35,45 @@ namespace Result_gen
         }
 
 
-        public void addMarks(double mark)
+        public void add_marks(double mark)
         {
             subject_marks.Add(mark);
         }
-        public void addGrade(double grade)
+        public void calculate_percentage()
+        {
+            foreach(double mark in subject_marks)
+            {
+                total_marks += mark;
+            }
+            percentage =  (total_marks / 5);
+        }
+        public void show_grade()
+        {
+            for(int i=0;i<5;i++)
+            {
+                Console.WriteLine($"{subjects[i]}         {grades[i]}");
+            }
+        }
+        public void show_result()
+        {
+            Console.WriteLine("***********************************************************************");
+            Console.WriteLine();
+            Console.WriteLine($"Id :- {Id}   Name :-   {name}");
+            Console.WriteLine();
+            Console.WriteLine("Subject    Marks   Grade");
+            Console.WriteLine();
+            for (int i=0;i<5;i++)
+            {
+                Console.WriteLine($"{subjects[i]}     {subject_marks[i]}     {grades[i]}");
+            }
+            calculate_percentage();
+            Console.WriteLine();
+            Console.WriteLine($"The Percentage of {name} is  {percentage}");
+            Console.WriteLine();
+            Console.WriteLine("***********************************************************************");
+
+        }
+        public void add_grade(double grade)
         {
             if (grade >= 0 && grade <= 100)
             {
@@ -60,6 +94,9 @@ namespace Result_gen
                     case double n when n >= 50:
                         grades.Add('E');
                         break;
+                    case double n when n >= 0:
+                        grades.Add('F');
+                        break;
                     default:
                         Console.WriteLine("Invlaid marks");
                         break;
@@ -71,35 +108,6 @@ namespace Result_gen
                 throw new ArgumentException($"Invalid {nameof(grade)}");
             }
         }
-        public void calculate_percentage()
-        {
-            foreach(double mark in subject_marks)
-            {
-                total_marks += mark;
-            }
-            percentage =  (total_marks / 5);
-        }
-        public void show_grade()
-        {
-            for(int i=0;i<5;i++)
-            {
-                Console.WriteLine($"{subjects[i]}         {grades[i]}");
-            }
-        }
-        public void show_result()
-        {
-            Console.WriteLine("***********************************************************************");
-            Console.WriteLine($"Id :- {Id}   Name :-   {name}");
-            Console.WriteLine("Subject        Marks    Grade");
-            for(int i=0;i<5;i++)
-            {
-                Console.WriteLine($"{subjects[i]}     {subject_marks[i]}     {grades[i]}");
-            }
-            calculate_percentage();
-            Console.WriteLine($"The Percentage of {name} is  {percentage}");
-
-        }
-
-
     }
 }
+    

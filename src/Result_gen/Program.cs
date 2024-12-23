@@ -6,24 +6,49 @@ namespace Result_gen
     {
         public static void Main(string[] args) 
         {
-            Student s1 = new Student(1, "Sanika");
-            s1.addMarks(98);
-            s1.addGrade(98);
+            Console.WriteLine("Enter the Id and name of the student");
+            int id=0;
+            try
+            {
+                var inp = Console.ReadLine();
+                id = int.Parse(inp);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
-            s1.addMarks(97);
-            s1.addGrade(97);
-
-            s1.addMarks(95);
-            s1.addGrade(95);
-
-            s1.addMarks(95);
-            s1.addGrade(95);
-
-            s1.addMarks(95);
-            s1.addGrade(95);
-
-            //Console.WriteLine(s1.calculate_percentage());
-            s1.show_grade();
+            var input = Console.ReadLine();
+            string name=input;
+            Student s1 = new Student(id, name);
+            List<string> sub = s1.subjects;
+            Console.WriteLine("Enter Marks of Subjects ");
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    Console.WriteLine("Enter the marks for "+sub[i]);
+                    var a = Console.ReadLine();
+                    int mark=int.Parse(a);
+                    if(mark>=0&&mark<=100)
+                    {
+                        s1.add_marks(mark);
+                        s1.add_grade(mark);
+                    }
+                    else
+                    {
+                        Console.WriteLine("The marks are invalid");
+                        i--;
+                    }
+                   
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    i--;
+                }
+                
+            }
             s1.show_result();
         }
     }
